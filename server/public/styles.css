@@ -62,6 +62,11 @@ body {
   cursor: pointer;
 }
 
+.logo-image-three {
+  width: 300px;
+  cursor: pointer;
+}
+
 .column-full {
   width: 100%;
 }
@@ -72,7 +77,7 @@ body {
   cursor: pointer;
 }
 
-textarea {
+.record-audio-textbox {
   width: 400px;
   display: block;
   margin-left: auto;
@@ -83,6 +88,24 @@ textarea {
 .instructions {
   font-family: Rajdhani, sans-serif;
   margin-top: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+#btn-speak {
+  color: white;
+  border-radius: 0.25rem;
+}
+
+#text-to-speech-textbox {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  display: block;
+}
+
+span {
+  font-family: Rajdhani, sans-serif;
   font-weight: bold;
   letter-spacing: 2px;
 }
@@ -132,11 +155,18 @@ textarea {
     }
   }
 
-  textarea {
+  .record-audio-textbox {
     width: 300px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px;
+  }
+
+  #text-to-speech-textbox {
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

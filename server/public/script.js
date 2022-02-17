@@ -32,22 +32,69 @@ pauseButton.addEventListener('click', function (event) {
   instructions.textContent = 'Voice Recognition is Off';
 });
 
+const voiceList = document.querySelector('#voiceList');
+const txtInput = document.querySelector('#text-to-speech-textbox');
+const btnSpeak = document.querySelector('#btn-speak');
+
+const speechSynthesis = window.speechSynthesis;
+let voices = [];
+
+GetVoices();
+if (speechSynthesis !== undefined) {
+  speechSynthesis.onvoiceschanged = GetVoices;
+}
+btnSpeak.addEventListener('click', () => {
+  const toSpeak = new SpeechSynthesisUtterance(txtInput.value);
+  const selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
+  voices.forEach(voice => {
+    if (voice.name === selectedVoiceName) {
+      toSpeak.voice = voice;
+    }
+  });
+  speechSynthesis.speak(toSpeak);
+});
+function GetVoices() {
+  voices = speechSynthesis.getVoices();
+  voiceList.innerHTML = '';
+  voices.forEach(voice => {
+    const listItem = document.createElement('option');
+    listItem.textContent = voice.name;
+    listItem.setAttribute('data-lang', voice.lang);
+    listItem.setAttribute('data-name', voice.name);
+    voiceList.appendChild(listItem);
+  });
+  voiceList.selectedIndex = 0;
+}
+
 const recordAudioFileImg = document.querySelector('#record-audio-file');
 const homepage = document.querySelector('.homepage');
 const recordAudioView = document.querySelector('.record-audio-view');
+const textToSpeechView = document.querySelector('.text-to-speech');
+const textToSpeechImg = document.querySelector('#text-to-speech');
 recordAudioFileImg.addEventListener('click', changeView);
+textToSpeechImg.addEventListener('click', changeView);
 function changeView(event) {
   if (event.target.matches('#record-audio-file')) {
     homepage.classList = 'homepage hidden';
     recordAudioView.classList = 'record-audio-view';
   }
+  if (event.target.matches('#text-to-speech')) {
+    homepage.classList = 'homepage hidden';
+    textToSpeechView.classList = 'text-to-speech-view';
+  }
 }
 const logoImageTwo = document.querySelector('.logo-image-two');
+const logoImageThree = document.querySelector('.logo-image-three');
+logoImageThree.addEventListener('click', goToHomepage);
 logoImageTwo.addEventListener('click', goToHomepage);
 function goToHomepage(event) {
   if (event.target.matches('.logo-image-two')) {
     homepage.classList = 'homepage';
     recordAudioView.classList = 'record-audio-view hidden';
+  }
+  if (event.target.matches('.logo-image-three')) {
+    homepage.classList = 'homepage';
+    textToSpeechView.classList = 'text-to-speech-view hidden';
   }
 }
 
