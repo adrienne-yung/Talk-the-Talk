@@ -1,0 +1,142 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(-45deg, #8d86cf, #8b90d4, #9dbeee, #a1bcee, #c7aed8, #a7aedf);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  background-color: #90d5ec;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+.row {
+  display: flex;
+}
+
+.column-one-third {
+  width: 33.33%;
+}
+
+.center {
+  text-align: center;
+}
+
+.image-option {
+  width: 500px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.logo-image {
+  width: 300px;
+  cursor: pointer;
+}
+
+.logo-image-two {
+  width: 300px;
+  cursor: pointer;
+}
+
+.column-full {
+  width: 100%;
+}
+
+.microphone-img-white {
+  width: 200px;
+  top: 0;
+  cursor: pointer;
+}
+
+textarea {
+  width: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+}
+
+.instructions {
+  font-family: Rajdhani, sans-serif;
+  margin-top: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 900px) {
+  body {
+    width: 100%;
+    background: linear-gradient(-45deg, #8d86cf, #8b90d4, #9dbeee, #a1bcee, #c7aed8, #a7aedf);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    background-color: #90d5ec;
+    background-attachment: fixed;
+  }
+
+  .image-option {
+    width: 200px;
+    cursor: pointer;
+  }
+
+  .logo-image {
+    width: 300px;
+    cursor: pointer;
+    margin-left: 70px;
+  }
+
+  .logo-image-two {
+    width: 300px;
+    cursor: pointer;
+  }
+
+  .container {
+    width: 375px;
+    height: 100%;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  textarea {
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+  }
+}
