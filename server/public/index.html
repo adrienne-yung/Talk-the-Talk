@@ -57,7 +57,7 @@
       <div class="row">
         <div class="column-full center">
           <div class="form-group">
-            <textarea id="textbox" rows="6" class="form"></textarea>
+            <textarea id="textbox" class="record-audio-textbox" rows="6"></textarea>
           </div>
           <div class="form-group">
             <button id="start-btn" class="btn btn-danger btn-block">Start Recording</button>
@@ -68,7 +68,27 @@
       </div>
     </div>
   </div>
+  <div data-view="text-to-speech" class="text-to-speech hidden">
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <div class="center">
+            <img class="logo-image-three" src="images/Talk the talk.png">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column-full center">
+          <span>Select Voice:</span><select name="" id="voiceList"></select>
+          <br><br>
+          <textarea rows="6" id="text-to-speech-textbox" class="form"></textarea>
+          <br><br>
+          <button id="btn-speak">Translate to Speech</button>
+        </div>
+      </div>
+    </div>
+  </div>
   </body>
-</body><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </body><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="script.js"></script>
 </html>
