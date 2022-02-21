@@ -15,6 +15,9 @@
 <body>
   <div id="root"></div>
   <div data-view="home-page" class="homepage">
+    <div class="setting-icon">
+      <img class="settings" src="images/settings2.png">
+    </div>
     <div class="container">
       <h1 class="center">
         <img class="logo-image" src="images/Talk the talk.png">
@@ -61,9 +64,13 @@
           </div>
           <div class="form-group">
             <button id="start-btn" class="btn btn-danger btn-block">Start Recording</button>
-            <button id="pause-btn" class="btn btn-danger btn-block">Pause Recording</button>
+            <button id="stop-btn" class="btn btn-danger btn-block">Stop Recording</button>
           </div>
           <p id="instructions" class="instructions">Click on "Start Recording"</p>
+          <br />
+          <br />
+          <br />
+          <ol id="recording-list"></ol>
         </div>
       </div>
     </div>
@@ -79,7 +86,7 @@
       </div>
       <div class="row">
         <div class="column-full center">
-          <span>Select Voice:</span><select name="" id="voiceList"></select>
+          <span class="select-voice-span">Select Voice:</span><select name="" id="voiceList"></select>
           <br><br>
           <textarea rows="6" id="text-to-speech-textbox" class="form"></textarea>
           <br><br>
@@ -88,7 +95,68 @@
       </div>
     </div>
   </div>
+  <div data-view="settings-page" class="settings-page-view hidden">
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <div class="center">
+            <img class="logo-image-four" src="images/Talk the talk.png">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="settings-container">
+          <div class="row">
+            <div class="column-half">
+              <div class="margin-bottom-setting-img center">
+                <img class="moonlit-asteroid" src="images/Moonlit Asteroid.jpg">
+              </div>
+              <div class="margin-bottom-setting-img center">
+                <span class="color-picker-one">Moonlit Asteroid</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <div class="margin-bottom-setting-img center">
+                <img class="love-tonight" src="images/Can You Feel The Love Tonight.jpg">
+              </div>
+              <div class="margin-bottom-setting-img center">
+                <span class="color-picker-two">Galaxy Sunset </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <div class="margin-bottom-setting-img center">
+                <img class="dark-ocean" src="images/Dark Ocean.jpg">
+              </div>
+              <div class="margin-bottom-setting-img center">
+                <span class="color-picker-three">Dark Ocean </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <div class="margin-bottom-setting-img center">
+                <img class="default-background" src="images/defaultresize.png">
+              </div>
+              <div class="margin-bottom-setting-img center">
+                <span class="color-picker-four">Code Calm (df) </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="https://unpkg.com/mic-recorder-to-mp3"></script> -->
+  <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  <script type="module" src="script.js"></script>
+  <script src="settings.js"></script>
   </body>
-  </body><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="script.js"></script>
+
 </html>

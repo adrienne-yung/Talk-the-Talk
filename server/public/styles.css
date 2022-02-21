@@ -67,6 +67,11 @@ body {
   cursor: pointer;
 }
 
+.logo-image-four {
+  width: 300px;
+  cursor: pointer;
+}
+
 .column-full {
   width: 100%;
 }
@@ -108,6 +113,46 @@ span {
   font-family: Rajdhani, sans-serif;
   font-weight: bold;
   letter-spacing: 2px;
+}
+
+.setting-icon {
+  text-align: left;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.settings {
+  width: 40px;
+  cursor: pointer;
+}
+
+.moonlit-asteroid {
+  width: 100px;
+  cursor: pointer;
+}
+
+.dark-ocean {
+  width: 100px;
+  cursor: pointer;
+}
+
+.love-tonight {
+  width: 100px;
+  cursor: pointer;
+}
+
+.default-background {
+  width: 100px;
+  cursor: pointer;
+}
+
+.margin-bottom-setting-img {
+  margin-bottom: 20px;
+}
+
+.settings-container {
+  width: 300px;
+  margin: auto;
 }
 
 @media (max-width: 900px) {
@@ -168,5 +213,14 @@ span {
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .setting-icon {
+    text-align: left;
+  }
+
+  .settings {
+    width: 30px;
+    cursor: pointer;
   }
 }
