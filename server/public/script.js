@@ -1,4 +1,4 @@
-// import Recorder from './recorder.js';
+/* global AgoraRTC */
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 const textbox = document.querySelector('#textbox');
@@ -20,18 +20,6 @@ recognition.onresult = function (event) {
   content += transcript;
   textbox.value = content;
 };
-// const startButton = document.querySelector('#start-btn');
-// startButton.addEventListener('click', function (event) {
-//   if (content.length) {
-//     content += ' ';
-//   }
-//   recognition.start();
-// });
-// const pauseButton = document.querySelector('#pause-btn');
-// pauseButton.addEventListener('click', function (event) {
-//   recognition.stop();
-//   instructions.textContent = 'Voice Recognition is Off';
-// });
 
 const URL = window.URL || window.webkitURL;
 let gumStream;
@@ -117,35 +105,6 @@ function createDownloadLink(blob) {
   li.appendChild(upload);
   recordingList.appendChild(li);
 }
-// const startButton = document.querySelector('#start-btn');
-// startButton.addEventListener('click', function (event) {
-//   if (content.length) {
-//     content += ' ';
-//   }
-//   recorder.start();
-//   recognition.start();
-// });
-// const pauseButton = document.querySelector('#pause-btn');
-// pauseButton.addEventListener('click', function (event) {
-//   recorder.stop().getMp3().then(([buffer, blob]) => {
-//     // eslint-disable-next-line no-console
-//     console.log(buffer, blob);
-//     const file = new File(buffer, 'music.mp3', {
-//       type: blob.type,
-//       lastModified: Date.now()
-//     });
-//     const li = document.createElement('li');
-//     const player = new Audio(URL.createObjectURL(file));
-//     player.controls = true;
-//     li.appendChild(player);
-//     document.querySelector('#playerlist').appendChild(li);
-//   })
-//     .catch(e => {
-//       console.error(e);
-//     });
-//   recognition.stop();
-//   instructions.textContent = 'Voice Recognition is Off';
-// });
 
 const voiceList = document.querySelector('#voiceList');
 const txtInput = document.querySelector('#text-to-speech-textbox');
@@ -188,8 +147,11 @@ const textToSpeechView = document.querySelector('.text-to-speech');
 const textToSpeechImg = document.querySelector('#text-to-speech');
 const settingsView = document.querySelector('.settings-page-view');
 const settingIcon = document.querySelector('.settings');
+const videoCallRoomView = document.querySelector('.video-call-room-view');
+const videoCallRoomImg = document.querySelector('#video-call-room');
 recordAudioFileImg.addEventListener('click', changeView);
 textToSpeechImg.addEventListener('click', changeView);
+videoCallRoomImg.addEventListener('click', changeView);
 settingIcon.addEventListener('click', changeView);
 function changeView(event) {
   if (event.target.matches('#record-audio-file')) {
@@ -205,10 +167,16 @@ function changeView(event) {
     homepage.classList = 'homepage hidden';
     settingsView.classList = 'settings-page-view';
   }
+  if (event.target.matches('#video-call-room')) {
+    homepage.classList = 'homepage hidden';
+    videoCallRoomView.classList = 'video-call-room-view';
+  }
 }
 const logoImageTwo = document.querySelector('.logo-image-two');
 const logoImageThree = document.querySelector('.logo-image-three');
 const logoImageFour = document.querySelector('.logo-image-four');
+const logoImageFive = document.querySelector('.logo-image-five');
+logoImageFive.addEventListener('click', goToHomepage);
 logoImageFour.addEventListener('click', goToHomepage);
 logoImageThree.addEventListener('click', goToHomepage);
 logoImageTwo.addEventListener('click', goToHomepage);
@@ -225,10 +193,149 @@ function goToHomepage(event) {
     homepage.classList = 'homepage';
     settingsView.classList = 'settings-page-view hidden';
   }
+  if (event.target.matches('.logo-image-five')) {
+    homepage.classList = 'homepage';
+    videoCallRoomView.classList = 'video-call-room-view hidden';
+  }
+}
+
+AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.WARNING);
+const handleError = function (err) {
+  // eslint-disable-next-line no-console
+  console.log('Error: ', err);
+};
+
+const remoteContainer = document.getElementById('remote-container');
+
+function addVideoStream(elementId) {
+  const streamDiv = document.createElement('div');
+  streamDiv.id = elementId;
+  streamDiv.style.transform = 'rotateY(180deg)';
+  remoteContainer.appendChild(streamDiv);
+}
+
+function removeVideoStream(elementId) {
+  const remoteDiv = document.getElementById(elementId);
+  if (remoteDiv) remoteDiv.parentNode.removeChild(remoteDiv);
+}
+const client = AgoraRTC.createClient({
+  mode: 'rtc',
+  codec: 'vp8'
+});
+
+client.init('04f356ac2b1648c08891925f16a3f852', function () {
+
+  // eslint-disable-next-line no-console
+  console.log('client initialized');
+}, function (err) {
+  // eslint-disable-next-line no-console
+  console.log('client init failed ', err);
+});
+const localStream = AgoraRTC.createStream({
+  audio: true,
+  video: true
+});
+localStream.init(() => {
+  localStream.play('me');
+  client.publish(localStream, handleError);
+}, handleError);
+
+client.join('00604f356ac2b1648c08891925f16a3f852IAB/T3dLrZVDcsLfv3IceMlEUOBqQ2eDrpW+PxWKHfXSK3y1AIgAAAAAEAATtvR9F40aYgEAAQAXjRpi', 'PaidTest1', null, uid => {
+}, handleError);
+
+client.on('stream-added', function (evt) {
+  client.subscribe(evt.stream, handleError);
+});
+
+client.on('stream-subscribed', function (evt) {
+  const stream = evt.stream;
+  const streamId = String(stream.getId());
+  addVideoStream(streamId);
+  stream.play(streamId);
+});
+client.on('stream-removed', function (evt) {
+  const stream = evt.stream;
+  const streamId = String(stream.getId());
+  stream.close();
+  removeVideoStream(streamId);
+});
+
+client.on('peer-leave', function (evt) {
+  const stream = evt.stream;
+  const streamId = String(stream.getId());
+  stream.close();
+  removeVideoStream(streamId);
+});
+
+const moonlitAsteroid = document.querySelector('.moonlit-asteroid');
+const galaxySunset = document.querySelector('.love-tonight');
+const darkOcean = document.querySelector('.dark-ocean');
+const defaultBackground = document.querySelector('.default-background');
+const colorPickerColorOne = document.querySelector('.color-picker-one');
+const colorPickerColorTwo = document.querySelector('.color-picker-two');
+const colorPickerColorThree = document.querySelector('.color-picker-three');
+const colorPickerColorFour = document.querySelector('.color-picker-four');
+const selectVoiceSpan = document.querySelector('.select-voice-span');
+const videoCallRoomLabels = document.querySelector('.video-call-labels');
+const videoCallRoomLabelsTwo = document.querySelector('.video-call-labels-two');
+
+moonlitAsteroid.addEventListener('click', changeBackgroundColor);
+galaxySunset.addEventListener('click', changeBackgroundColor);
+darkOcean.addEventListener('click', changeBackgroundColor);
+defaultBackground.addEventListener('click', changeBackgroundColor);
+function changeBackgroundColor(event) {
+  if (event.target.matches('.moonlit-asteroid')) {
+    document.body.style.backgroundImage = 'linear-gradient(-45deg, ' + '#0f2027' + ', ' + '#203a43' + ', ' + '#2c5364' + ', ' + '#2c687d' + ', ' + '#4597b4' + ')';
+    colorPickerColorOne.style.color = 'white';
+    colorPickerColorTwo.style.color = 'white';
+    colorPickerColorThree.style.color = 'white';
+    colorPickerColorFour.style.color = 'white';
+    instructions.style.color = 'white';
+    selectVoiceSpan.style.color = 'white';
+    videoCallRoomLabels.style.color = 'white';
+    videoCallRoomLabelsTwo.style.color = 'white';
+    document.body.style.animation = 'gradient 15s ease infinite';
+  }
+  if (event.target.matches('.love-tonight')) {
+    document.body.style.backgroundImage = 'linear-gradient(-45deg, ' + '#4568dc' + ', ' + '#b06ab3' + ')';
+    colorPickerColorOne.style.color = 'black';
+    colorPickerColorTwo.style.color = 'black';
+    colorPickerColorThree.style.color = 'black';
+    colorPickerColorFour.style.color = 'black';
+    instructions.style.color = 'black';
+    selectVoiceSpan.style.color = 'black';
+    videoCallRoomLabels.style.color = 'black';
+    videoCallRoomLabelsTwo.style.color = 'black';
+    document.body.style.animation = 'gradient 15s ease infinite';
+  }
+  if (event.target.matches('.dark-ocean')) {
+    document.body.style.backgroundImage = 'linear-gradient(-45deg, ' + '#373b44' + ', ' + '#4286f4' + ')';
+    colorPickerColorOne.style.color = 'white';
+    colorPickerColorTwo.style.color = 'white';
+    colorPickerColorThree.style.color = 'white';
+    colorPickerColorFour.style.color = 'white';
+    instructions.style.color = 'white';
+    selectVoiceSpan.style.color = 'white';
+    videoCallRoomLabels.style.color = 'white';
+    videoCallRoomLabelsTwo.style.color = 'white';
+    document.body.style.animation = 'gradient 15s ease infinite';
+  }
+  if (event.target.matches('.default-background')) {
+    document.body.style.backgroundImage = 'linear-gradient(-45deg, ' + '#8d86cf' + ', ' + '#8b90d4' + ', ' + '#9dbeee' + ', ' + '#a1bcee' + ', ' + '#c7aed8' + ',' + '#a7aedf' + ')';
+    colorPickerColorOne.style.color = 'black';
+    colorPickerColorTwo.style.color = 'black';
+    colorPickerColorThree.style.color = 'black';
+    colorPickerColorFour.style.color = 'black';
+    instructions.style.color = 'black';
+    selectVoiceSpan.style.color = 'black';
+    videoCallRoomLabels.style.color = 'black';
+    videoCallRoomLabelsTwo.style.color = 'black';
+    document.body.style.animation = 'gradient 15s ease infinite';
+  }
 }
 
 function getLocalStream() {
-  navigator.mediaDevices.getUserMedia({ video: false, audio: true }).then(stream => {
+  navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
     window.localStream = stream;
   }).catch(err => {
     console.error(err);

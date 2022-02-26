@@ -30,7 +30,7 @@
         </div>
         <div class="column-one-third">
           <div class="center">
-            <img id="view-audio-file" class="image-option" src="images/View Audio Files.png">
+            <img id="video-call-room" class="image-option" src="images/Video Call Room.png">
           </div>
         </div>
         <div class="column-one-third">
@@ -150,13 +150,28 @@
       </div>
     </div>
   </div>
+  <div data-view="video-call-room-view" class="video-call-room-view hidden">
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <div class="center">
+            <img class="logo-image-five" src="images/Talk the talk.png">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="video-container">
+      <h4 class="video-call-labels">Video Call Host</h4>
+      <div id="me"></div>
+    </div>
+    <h4 class="video-call-labels-two">Video Call Guest</h4>
+    <div id="remote-container"></div>
+  </div>
 
-
+  <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.6.9.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <!-- <script src="https://unpkg.com/mic-recorder-to-mp3"></script> -->
   <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
-  <script type="module" src="script.js"></script>
-  <script src="settings.js"></script>
+  <script src="script.js"></script>
   </body>
 
 </html>
