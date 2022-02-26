@@ -72,6 +72,11 @@ body {
   cursor: pointer;
 }
 
+.logo-image-five {
+  width: 300px;
+  cursor: pointer;
+}
+
 .column-full {
   width: 100%;
 }
@@ -153,6 +158,36 @@ span {
 .settings-container {
   width: 300px;
   margin: auto;
+}
+
+#stream-controls {
+  display: none;
+}
+
+h4 {
+  text-align: center;
+}
+
+#me {
+  position: relative;
+  width: 25%;
+  margin: 0 auto;
+  display: block;
+}
+
+#me video {
+  position: relative !important;
+}
+
+#remote-container {
+  display: block;
+  width: 25%;
+  margin: 0 auto;
+}
+
+#remote-container video {
+  height: auto;
+  position: relative !important;
 }
 
 @media (max-width: 900px) {
